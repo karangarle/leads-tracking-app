@@ -58,40 +58,19 @@ export const LeadModal: React.FC<LeadModalProps> = ({
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.75)',
-      backdropFilter: 'blur(4px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '1rem'
-    }}>
-      <div className="glass-panel" style={{ width: '100%', maxWidth: '480px', padding: '1.75rem', position: 'relative' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.25rem' }}>{title}</h2>
+    <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="glass-panel rounded-xl w-full max-w-md p-7 relative shadow-2xl">
+        <h2 className="text-xl font-semibold mb-5 text-white">{title}</h2>
 
         {error && (
-          <div style={{
-            backgroundColor: 'rgba(239, 68, 68, 0.15)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            color: '#f87171',
-            padding: '0.75rem 1rem',
-            borderRadius: '6px',
-            fontSize: '0.875rem',
-            marginBottom: '1rem'
-          }}>
+          <div className="bg-red-500/15 border border-red-500/30 color-red-400 text-red-400 px-4 py-3 rounded-lg text-sm mb-4">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+            <label className="block text-sm text-gray-400 mb-1.5 font-medium">
               Full Name *
             </label>
             <input
@@ -99,19 +78,12 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Jane Doe"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                color: '#fff'
-              }}
+              className="w-full px-3.5 py-2.5 bg-gray-900/80 border border-gray-700/80 rounded-lg text-white text-sm focus:border-purple-500 transition-colors"
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+            <label className="block text-sm text-gray-400 mb-1.5 font-medium">
               Email Address *
             </label>
             <input
@@ -119,19 +91,12 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. jane@company.com"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                color: '#fff'
-              }}
+              className="w-full px-3.5 py-2.5 bg-gray-900/80 border border-gray-700/80 rounded-lg text-white text-sm focus:border-purple-500 transition-colors"
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+            <label className="block text-sm text-gray-400 mb-1.5 font-medium">
               Phone Number *
             </label>
             <input
@@ -139,32 +104,18 @@ export const LeadModal: React.FC<LeadModalProps> = ({
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="e.g. +1 (555) 000-1234"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                color: '#fff'
-              }}
+              className="w-full px-3.5 py-2.5 bg-gray-900/80 border border-gray-700/80 rounded-lg text-white text-sm focus:border-purple-500 transition-colors"
             />
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
+            <label className="block text-sm text-gray-400 mb-1.5 font-medium">
               Status
             </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.85rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                color: '#fff'
-              }}
+              className="w-full px-3.5 py-2.5 pr-9 bg-gray-900/80 border border-gray-700/80 rounded-lg text-white text-sm focus:border-purple-500 transition-colors cursor-pointer"
             >
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
@@ -173,31 +124,18 @@ export const LeadModal: React.FC<LeadModalProps> = ({
             </select>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
+          <div className="flex justify-end gap-3 mt-3">
             <button
               type="button"
               onClick={onClose}
-              style={{
-                padding: '0.6rem 1.25rem',
-                borderRadius: '6px',
-                backgroundColor: 'transparent',
-                border: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)'
-              }}
+              className="px-4 py-2 rounded-lg bg-transparent border border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 transition-colors text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              style={{
-                padding: '0.6rem 1.25rem',
-                borderRadius: '6px',
-                background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
-                color: '#fff',
-                fontWeight: 500,
-                opacity: loading ? 0.7 : 1
-              }}
+              className="px-5 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium text-sm hover:from-purple-500 hover:to-blue-500 transition-all shadow-lg shadow-purple-600/30 disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save Lead'}
             </button>
