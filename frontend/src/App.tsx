@@ -220,11 +220,12 @@ export const App: React.FC = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
               style={{
                 padding: '0.65rem 1rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.8)',
+                backgroundColor: 'rgba(17, 24, 39, 0.9)',
                 border: '1px solid var(--border-color)',
                 borderRadius: '6px',
                 color: '#fff',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                cursor: 'pointer'
               }}
             >
               <option value="">All Statuses</option>
