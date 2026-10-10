@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Lead, Note, PaginatedLeads } from './types';
 import { LeadModal } from './components/LeadModal';
 import { LeadDetail } from './components/LeadDetail';
+import { ToastContainer, ToastMessage } from './components/Toast';
 import { Search, Plus, RefreshCw, ChevronLeft, ChevronRight, Eye, Trash2, Edit3, Layers } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -11,6 +12,23 @@ export const App: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Toast notifications state
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const addToast = (type: 'success' | 'error' | 'info', message: string) => {
+    const id = Date.now().toString() + Math.random().toString(36).substring(2, 5);
+    setToasts((prev) => [...prev, { id, type, message }]);
+
+    // Auto dismiss after 3.5 seconds
+    setTimeout(() => {
+      removeToast(id);
+    }, 3500);
+  };
+
+  const removeToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
 
   // Selected Lead State
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -73,9 +91,13 @@ export const App: React.FC = () => {
 
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.error || 'Failed to create lead');
+      const msg = err.error || 'Failed to create lead';
+      addToast('error', msg);
+      throw new Error(msg);
     }
 
+    const created = await res.json();
+    addToast('success', `Lead "${created.name}" created successfully!`);
     await fetchLeads(pagination.page);
   };
 
@@ -90,7 +112,9 @@ export const App: React.FC = () => {
 
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.error || 'Failed to update lead');
+      const msg = err.error || 'Failed to update lead';
+      addToast('error', msg);
+      throw new Error(msg);
     }
 
     const updated = await res.json();
@@ -98,6 +122,7 @@ export const App: React.FC = () => {
       setSelectedLead(updated);
     }
 
+    addToast('success', `Lead #${updated.id} updated successfully!`);
     setEditingLead(null);
     await fetchLeads(pagination.page);
   };
@@ -113,9 +138,10 @@ export const App: React.FC = () => {
         setSelectedLead(null);
       }
 
+      addToast('success', `Lead #${leadId} deleted successfully!`);
       await fetchLeads(pagination.page);
     } catch (err: any) {
-      alert(err.message || 'Error deleting lead');
+      addToast('error', err.message || 'Error deleting lead');
     }
   };
 
@@ -130,9 +156,12 @@ export const App: React.FC = () => {
 
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.error || 'Failed to add note');
+      const msg = err.error || 'Failed to add note';
+      addToast('error', msg);
+      throw new Error(msg);
     }
 
+    addToast('success', 'New note added to lead!');
     await fetchNotesForLead(selectedLead.id);
   };
 
@@ -332,6 +361,8 @@ export const App: React.FC = () => {
           title={`Edit Lead #${editingLead.id}`}
         />
       )}
+      {/* Toast Notifications */}
+      <ToastContainer toasts={toasts} onDismiss={removeToast} />
     </div>
   );
 };
