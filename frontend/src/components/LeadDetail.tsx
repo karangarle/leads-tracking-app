@@ -80,7 +80,7 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Lead Info */}
-        <div className="glass-panel rounded-xl p-6 h-fit lg:col-span-1">
+        <div className="bg-glass rounded-xl p-6 h-fit lg:col-span-1">
           <div className="flex justify-between items-start mb-5">
             <div>
               <h2 className="text-xl font-bold text-white">{lead.name}</h2>
@@ -119,7 +119,7 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({
         </div>
 
         {/* Right Column: Notes & Activity Timeline */}
-        <div className="glass-panel rounded-xl p-6 flex flex-col gap-6 lg:col-span-2">
+        <div className="bg-glass rounded-xl p-6 flex flex-col gap-6 lg:col-span-2">
           <div className="flex items-center gap-2">
             <MessageSquare size={20} className="text-cyan-400" />
             <h3 className="text-lg font-semibold text-white">Notes & Activity Timeline</h3>

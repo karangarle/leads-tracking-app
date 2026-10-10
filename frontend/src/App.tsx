@@ -185,7 +185,7 @@ export const App: React.FC = () => {
       ) : (
         <div className="flex flex-col gap-6">
           {/* Search & Filter Bar */}
-          <div className="glass-panel rounded-xl p-5 flex flex-wrap gap-4 items-center">
+          <div className="bg-glass rounded-xl p-5 flex flex-wrap gap-4 items-center">
             <div className="flex-1 min-w-[240px] relative">
               <Search size={18} className="text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -218,7 +218,7 @@ export const App: React.FC = () => {
           </div>
 
           {/* Table Container */}
-          <div className="glass-panel rounded-xl overflow-hidden shadow-xl">
+          <div className="bg-glass rounded-xl overflow-hidden shadow-xl">
             {loading ? (
               <div className="p-12 text-center text-gray-400">Loading leads...</div>
             ) : error ? (

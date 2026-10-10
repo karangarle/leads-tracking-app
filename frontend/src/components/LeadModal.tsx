@@ -59,7 +59,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="glass-panel rounded-xl w-full max-w-md p-7 relative shadow-2xl">
+      <div className="bg-glass rounded-xl w-full max-w-md p-7 relative shadow-2xl">
         <h2 className="text-xl font-semibold mb-5 text-white">{title}</h2>
 
         {error && (
