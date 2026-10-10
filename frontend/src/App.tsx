@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Lead, Note, PaginatedLeads } from './types';
 import { LeadModal } from './components/LeadModal';
 import { LeadDetail } from './components/LeadDetail';
+import { DeleteModal } from './components/DeleteModal';
 import { ToastContainer } from './components/Toast';
 import type { ToastMessage } from './components/Toast';
 import { Search, Plus, RefreshCw, ChevronLeft, ChevronRight, Eye, Trash2, Edit3, Layers } from 'lucide-react';
@@ -38,6 +39,7 @@ export const App: React.FC = () => {
   // Modals
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
+  const [deletingLead, setDeletingLead] = useState<Lead | null>(null);
 
   const fetchLeads = async (page = 1) => {
     setLoading(true);
@@ -129,8 +131,6 @@ export const App: React.FC = () => {
   };
 
   const handleDeleteLead = async (leadId: number) => {
-    if (!window.confirm('Are you sure you want to delete this lead?')) return;
-
     try {
       const res = await fetch(`/api/leads/${leadId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete lead');
@@ -200,7 +200,7 @@ export const App: React.FC = () => {
           onBack={() => setSelectedLead(null)}
           onAddNote={handleAddNote}
           onEditLead={() => setEditingLead(selectedLead)}
-          onDeleteLead={() => handleDeleteLead(selectedLead.id)}
+          onDeleteLead={() => setDeletingLead(selectedLead)}
         />
       ) : (
         <div className="flex flex-col gap-6">
@@ -295,7 +295,7 @@ export const App: React.FC = () => {
                               <Edit3 size={15} />
                             </button>
                             <button
-                              onClick={() => handleDeleteLead(lead.id)}
+                              onClick={() => setDeletingLead(lead)}
                               title="Delete Lead"
                               className="p-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 rounded-md border border-rose-500/30 transition-colors"
                             >
@@ -362,6 +362,17 @@ export const App: React.FC = () => {
           title={`Edit Lead #${editingLead.id}`}
         />
       )}
+      {/* Delete Lead Confirmation Modal */}
+      {deletingLead && (
+        <DeleteModal
+          isOpen={true}
+          onClose={() => setDeletingLead(null)}
+          onConfirm={() => handleDeleteLead(deletingLead.id)}
+          leadName={deletingLead.name}
+          leadId={deletingLead.id}
+        />
+      )}
+
       {/* Toast Notifications */}
       <ToastContainer toasts={toasts} onDismiss={removeToast} />
     </div>
