@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import type { Lead, Note, PaginatedLeads } from './types';
 import { LeadModal } from './components/LeadModal';
 import { LeadDetail } from './components/LeadDetail';
-import { ToastContainer, ToastMessage } from './components/Toast';
+import { ToastContainer } from './components/Toast';
+import type { ToastMessage } from './components/Toast';
 import { Search, Plus, RefreshCw, ChevronLeft, ChevronRight, Eye, Trash2, Edit3, Layers } from 'lucide-react';
 
 export const App: React.FC = () => {
