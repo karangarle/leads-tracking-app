@@ -1,6 +1,6 @@
 node_modules
 dist
-client/dist
-client/node_modules
+backend/dist
+frontend/dist
 *.db
 .env
