@@ -137,45 +137,25 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem 1.5rem' }}>
+    <div className="max-w-[1200px] mx-auto px-6 py-8">
       {/* Navbar Header */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '10px',
-            background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 14px rgba(139, 92, 246, 0.4)'
-          }}>
-            <Layers size={22} color="#fff" />
+      <header className="flex justify-between items-center mb-10">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-[10px] bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/40">
+            <Layers size={22} className="text-white" />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.02em', background: 'linear-gradient(to right, #ffffff, #94a3b8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
               LeadTrack Portal
             </h1>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Enterprise Lead Management & CRM System</p>
+            <p className="text-xs text-gray-400">Enterprise Lead Management & CRM System</p>
           </div>
         </div>
 
         {!selectedLead && (
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.65rem 1.3rem',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)',
-              color: '#fff',
-              fontWeight: 600,
-              fontSize: '0.9rem',
-              boxShadow: '0 4px 14px rgba(139, 92, 246, 0.3)'
-            }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-tr from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold text-sm transition-all shadow-lg shadow-purple-500/30"
           >
             <Plus size={18} /> New Lead
           </button>
@@ -193,40 +173,24 @@ export const App: React.FC = () => {
           onDeleteLead={() => handleDeleteLead(selectedLead.id)}
         />
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className="flex flex-col gap-6">
           {/* Search & Filter Bar */}
-          <div className="glass-panel" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <div style={{ flex: 1, minWidth: '240px', position: 'relative' }}>
-              <Search size={18} color="var(--text-secondary)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+          <div className="glass-panel p-5 flex gap-4 flex-wrap items-center">
+            <div className="flex-1 min-w-[240px] relative">
+              <Search size={18} className="text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search leads by name, email, or phone..."
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.85rem 0.65rem 2.4rem',
-                  backgroundColor: 'rgba(17, 24, 39, 0.8)',
-                  border: '1px solid var(--border-color)',
-                  borderRadius: '6px',
-                  color: '#fff',
-                  fontSize: '0.9rem'
-                }}
+                className="w-full pl-9 pr-3.5 py-2.5 bg-brand-secondary/80 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 transition-colors"
               />
             </div>
 
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              style={{
-                padding: '0.65rem 1rem',
-                backgroundColor: 'rgba(17, 24, 39, 0.9)',
-                border: '1px solid var(--border-color)',
-                borderRadius: '6px',
-                color: '#fff',
-                fontSize: '0.9rem',
-                cursor: 'pointer'
-              }}
+              className="px-4 py-2.5 bg-brand-secondary/90 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 cursor-pointer transition-colors"
             >
               <option value="">All Statuses</option>
               <option value="new">New</option>
@@ -237,154 +201,104 @@ export const App: React.FC = () => {
 
             <button
               onClick={() => fetchLeads(1)}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.65rem 1rem',
-                backgroundColor: 'var(--bg-card)',
-                color: 'var(--text-secondary)',
-                borderRadius: '6px',
-                border: '1px solid var(--border-color)',
-                fontSize: '0.9rem'
-              }}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border text-sm font-medium transition-colors"
             >
               <RefreshCw size={16} /> Refresh
             </button>
           </div>
 
           {/* Table Container */}
-          <div className="glass-panel" style={{ overflow: 'hidden' }}>
+          <div className="glass-panel overflow-hidden">
             {loading ? (
-              <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading leads...</div>
+              <div className="p-12 text-center text-gray-400">Loading leads...</div>
             ) : error ? (
-              <div style={{ padding: '3rem', textAlign: 'center', color: '#f87171' }}>{error}</div>
+              <div className="p-12 text-center text-rose-400">{error}</div>
             ) : leads.length === 0 ? (
-              <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              <div className="p-12 text-center text-gray-400">
                 No leads found matching your query.
               </div>
             ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)', backgroundColor: 'rgba(17, 24, 39, 0.5)', color: 'var(--text-secondary)' }}>
-                    <th style={{ padding: '1rem' }}>ID</th>
-                    <th style={{ padding: '1rem' }}>Name</th>
-                    <th style={{ padding: '1rem' }}>Contact Details</th>
-                    <th style={{ padding: '1rem' }}>Status</th>
-                    <th style={{ padding: '1rem' }}>Created</th>
-                    <th style={{ padding: '1rem', textAlign: 'right' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leads.map((lead) => (
-                    <tr
-                      key={lead.id}
-                      style={{
-                        borderBottom: '1px solid var(--border-color)',
-                        transition: 'background-color 0.15s ease'
-                      }}
-                    >
-                      <td style={{ padding: '1rem', color: 'var(--text-secondary)' }}>#{lead.id}</td>
-                      <td style={{ padding: '1rem', fontWeight: 600, color: '#fff' }}>{lead.name}</td>
-                      <td style={{ padding: '1rem' }}>
-                        <div>{lead.email}</div>
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{lead.phone}</div>
-                      </td>
-                      <td style={{ padding: '1rem' }}>
-                        <span className={`badge badge-${lead.status}`}>{lead.status}</span>
-                      </td>
-                      <td style={{ padding: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                        {new Date(lead.createdAt).toLocaleDateString()}
-                      </td>
-                      <td style={{ padding: '1rem', textAlign: 'right' }}>
-                        <div style={{ display: 'inline-flex', gap: '0.5rem' }}>
-                          <button
-                            onClick={() => handleSelectLead(lead)}
-                            title="View Details & Notes"
-                            style={{
-                              padding: '0.4rem 0.6rem',
-                              backgroundColor: 'rgba(59, 130, 246, 0.15)',
-                              color: '#60a5fa',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(59, 130, 246, 0.3)'
-                            }}
-                          >
-                            <Eye size={15} />
-                          </button>
-                          <button
-                            onClick={() => setEditingLead(lead)}
-                            title="Edit Lead"
-                            style={{
-                              padding: '0.4rem 0.6rem',
-                              backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                              color: '#fbbf24',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(245, 158, 11, 0.3)'
-                            }}
-                          >
-                            <Edit3 size={15} />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteLead(lead.id)}
-                            title="Delete Lead"
-                            style={{
-                              padding: '0.4rem 0.6rem',
-                              backgroundColor: 'rgba(239, 68, 68, 0.15)',
-                              color: '#f87171',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(239, 68, 68, 0.3)'
-                            }}
-                          >
-                            <Trash2 size={15} />
-                          </button>
-                        </div>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-brand-border bg-brand-secondary/50 text-gray-400 font-medium">
+                      <th className="p-4">ID</th>
+                      <th className="p-4">Name</th>
+                      <th className="p-4">Contact Details</th>
+                      <th className="p-4">Status</th>
+                      <th className="p-4">Created</th>
+                      <th className="p-4 text-right">Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-brand-border">
+                    {leads.map((lead) => (
+                      <tr
+                        key={lead.id}
+                        className="hover:bg-brand-hover/40 transition-colors"
+                      >
+                        <td className="p-4 text-gray-400">#{lead.id}</td>
+                        <td className="p-4 font-semibold text-white">{lead.name}</td>
+                        <td className="p-4">
+                          <div className="text-gray-100">{lead.email}</div>
+                          <div className="text-xs text-gray-400">{lead.phone}</div>
+                        </td>
+                        <td className="p-4">
+                          <span className={`badge badge-${lead.status}`}>{lead.status}</span>
+                        </td>
+                        <td className="p-4 text-gray-400 text-xs">
+                          {new Date(lead.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="p-4 text-right">
+                          <div className="inline-flex gap-2">
+                            <button
+                              onClick={() => handleSelectLead(lead)}
+                              title="View Details & Notes"
+                              className="p-1.5 bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 rounded-md border border-blue-500/30 transition-colors"
+                            >
+                              <Eye size={15} />
+                            </button>
+                            <button
+                              onClick={() => setEditingLead(lead)}
+                              title="Edit Lead"
+                              className="p-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 rounded-md border border-amber-500/30 transition-colors"
+                            >
+                              <Edit3 size={15} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteLead(lead.id)}
+                              title="Delete Lead"
+                              className="p-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 rounded-md border border-rose-500/30 transition-colors"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
 
             {/* Pagination Controls */}
             {!loading && leads.length > 0 && (
-              <div style={{
-                padding: '1rem 1.25rem',
-                borderTop: '1px solid var(--border-color)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: 'rgba(17, 24, 39, 0.4)'
-              }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <div className="px-5 py-4 border-t border-brand-border flex justify-between items-center bg-brand-secondary/40">
+                <span className="text-xs text-gray-400">
                   Showing {leads.length} of {pagination.total} leads (Page {pagination.page} of {pagination.totalPages})
                 </span>
 
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <div className="flex gap-2">
                   <button
                     disabled={pagination.page <= 1}
                     onClick={() => fetchLeads(pagination.page - 1)}
-                    style={{
-                      padding: '0.4rem 0.8rem',
-                      backgroundColor: 'var(--bg-card)',
-                      color: 'var(--text-secondary)',
-                      borderRadius: '6px',
-                      border: '1px solid var(--border-color)',
-                      opacity: pagination.page <= 1 ? 0.5 : 1
-                    }}
+                    className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
                   >
                     <ChevronLeft size={16} />
                   </button>
                   <button
                     disabled={pagination.page >= pagination.totalPages}
                     onClick={() => fetchLeads(pagination.page + 1)}
-                    style={{
-                      padding: '0.4rem 0.8rem',
-                      backgroundColor: 'var(--bg-card)',
-                      color: 'var(--text-secondary)',
-                      borderRadius: '6px',
-                      border: '1px solid var(--border-color)',
-                      opacity: pagination.page >= pagination.totalPages ? 0.5 : 1
-                    }}
+                    className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
                   >
                     <ChevronRight size={16} />
                   </button>

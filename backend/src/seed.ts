@@ -3,7 +3,7 @@ import { getDb } from './db';
 const initialLeads = [
   {
     name: 'Sarah Connor',
-    email: 'sarah.connor@cyberdyne.io',
+    email: 'sarah.connor@yopmail.com',
     phone: '+1 (555) 019-2834',
     status: 'qualified',
     notes: [
@@ -13,7 +13,7 @@ const initialLeads = [
   },
   {
     name: 'Alex Mercer',
-    email: 'alex.mercer@gentek.com',
+    email: 'alex.mercer@yopmail.com',
     phone: '+1 (555) 014-8899',
     status: 'contacted',
     notes: [
@@ -23,7 +23,7 @@ const initialLeads = [
   },
   {
     name: 'Elena Rostova',
-    email: 'elena.r@techventures.co',
+    email: 'elena.r@yopmail.com',
     phone: '+1 (555) 012-4411',
     status: 'new',
     notes: [
@@ -32,7 +32,7 @@ const initialLeads = [
   },
   {
     name: 'Marcus Vance',
-    email: 'marcus.v@apexcorp.org',
+    email: 'marcus.v@yopmail.com',
     phone: '+1 (555) 018-7733',
     status: 'lost',
     notes: [
@@ -41,7 +41,7 @@ const initialLeads = [
   },
   {
     name: 'David Kim',
-    email: 'dkim@innovatelabs.net',
+    email: 'dkim@yopmail.com',
     phone: '+1 (555) 011-3322',
     status: 'qualified',
     notes: [

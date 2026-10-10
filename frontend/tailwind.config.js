@@ -7,13 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        dark: {
-          900: '#0b0f19',
-          800: '#111827',
-          700: '#1f293d',
-          600: '#28354e',
-          500: '#2e3b52',
-        }
+        'brand-bg': '#0b0f19',
+        'brand-card': '#1f293d',
+        'brand-hover': '#28354e',
+        'brand-border': '#2e3b52',
+        'brand-secondary': '#111827',
       }
     },
   },
