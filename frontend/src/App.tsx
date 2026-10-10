@@ -5,7 +5,7 @@ import { LeadDetail } from './components/LeadDetail';
 import { DeleteModal } from './components/DeleteModal';
 import { ToastContainer } from './components/Toast';
 import type { ToastMessage } from './components/Toast';
-import { Search, Plus, RefreshCw, ChevronLeft, ChevronRight, Eye, Trash2, Edit3, Layers } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 export const App: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -172,7 +172,7 @@ export const App: React.FC = () => {
       <header className="flex justify-between items-center mb-10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-[10px] bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/40">
-            <Layers size={22} className="text-white" />
+            <Icon icon="material-symbols:layers-outline-rounded" className="w-6 h-6 text-white" />
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
@@ -187,7 +187,7 @@ export const App: React.FC = () => {
             onClick={() => setIsCreateModalOpen(true)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-tr from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold text-sm transition-all shadow-lg shadow-purple-500/30"
           >
-            <Plus size={18} /> New Lead
+            <Icon icon="material-symbols:add-rounded" className="w-5 h-5" /> New Lead
           </button>
         )}
       </header>
@@ -207,7 +207,7 @@ export const App: React.FC = () => {
           {/* Search & Filter Bar */}
           <div className="glass-panel p-5 flex gap-4 flex-wrap items-center">
             <div className="flex-1 min-w-[240px] relative">
-              <Search size={18} className="text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Icon icon="material-symbols:search-rounded" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
@@ -233,7 +233,7 @@ export const App: React.FC = () => {
               onClick={() => fetchLeads(1)}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border text-sm font-medium transition-colors"
             >
-              <RefreshCw size={16} /> Refresh
+              <Icon icon="material-symbols:refresh-rounded" className="w-4 h-4" /> Refresh
             </button>
           </div>
 
@@ -285,21 +285,21 @@ export const App: React.FC = () => {
                               title="View Details & Notes"
                               className="p-1.5 bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 rounded-md border border-blue-500/30 transition-colors"
                             >
-                              <Eye size={15} />
+                              <Icon icon="material-symbols:visibility-outline-rounded" className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => setEditingLead(lead)}
                               title="Edit Lead"
                               className="p-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 rounded-md border border-amber-500/30 transition-colors"
                             >
-                              <Edit3 size={15} />
+                              <Icon icon="material-symbols:edit-outline-rounded" className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => setDeletingLead(lead)}
                               title="Delete Lead"
                               className="p-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 rounded-md border border-rose-500/30 transition-colors"
                             >
-                              <Trash2 size={15} />
+                              <Icon icon="material-symbols:delete-outline-rounded" className="w-4 h-4" />
                             </button>
                           </div>
                         </td>
@@ -323,14 +323,14 @@ export const App: React.FC = () => {
                     onClick={() => fetchLeads(pagination.page - 1)}
                     className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
                   >
-                    <ChevronLeft size={16} />
+                    <Icon icon="material-symbols:chevron-left-rounded" className="w-4 h-4" />
                   </button>
                   <button
                     disabled={pagination.page >= pagination.totalPages}
                     onClick={() => fetchLeads(pagination.page + 1)}
                     className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
                   >
-                    <ChevronRight size={16} />
+                    <Icon icon="material-symbols:chevron-right-rounded" className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -362,6 +362,7 @@ export const App: React.FC = () => {
           title={`Edit Lead #${editingLead.id}`}
         />
       )}
+
       {/* Delete Lead Confirmation Modal */}
       {deletingLead && (
         <DeleteModal

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
       <div className="glass-panel rounded-xl w-full max-w-md p-6 relative shadow-2xl border border-rose-500/20">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-12 h-12 rounded-full bg-rose-500/15 border border-rose-500/30 flex items-center justify-center shrink-0">
-            <AlertTriangle className="w-6 h-6 text-rose-400" />
+            <Icon icon="material-symbols:warning-amber-rounded" className="w-6 h-6 text-rose-400" />
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">Delete Lead</h3>

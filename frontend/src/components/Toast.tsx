@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 export interface ToastMessage {
   id: string;
@@ -32,9 +32,9 @@ export const ToastContainer: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
                 : 'bg-blue-950/80 border-blue-500/40 text-blue-200'
             }`}
           >
-            {isSuccess && <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />}
-            {isError && <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />}
-            {!isSuccess && !isError && <Info className="w-5 h-5 text-blue-400 shrink-0" />}
+            {isSuccess && <Icon icon="material-symbols:check-circle-outline-rounded" className="w-5 h-5 text-emerald-400 shrink-0" />}
+            {isError && <Icon icon="material-symbols:error-outline-rounded" className="w-5 h-5 text-rose-400 shrink-0" />}
+            {!isSuccess && !isError && <Icon icon="material-symbols:info-outline-rounded" className="w-5 h-5 text-blue-400 shrink-0" />}
 
             <span className="text-sm font-medium flex-1">{toast.message}</span>
 
@@ -42,7 +42,7 @@ export const ToastContainer: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
               onClick={() => onDismiss(toast.id)}
               className="p-1 rounded-md opacity-70 hover:opacity-100 transition-opacity"
             >
-              <X className="w-4 h-4" />
+              <Icon icon="material-symbols:close-rounded" className="w-4 h-4" />
             </button>
           </div>
         );
