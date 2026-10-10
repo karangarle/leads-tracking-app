@@ -31,9 +31,15 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
           </div>
         </div>
 
-        <p className="text-sm text-gray-300 mb-6">
-          Are you sure you want to delete {leadName ? <span className="font-semibold text-white">"{leadName}"</span> : 'this lead'} {leadId ? `(#${leadId})` : ''}? All associated notes will also be permanently removed.
-        </p>
+        <div className="space-y-3 mb-6">
+          <p className="text-sm text-gray-200 leading-relaxed">
+            Are you sure you want to delete lead <span className="font-semibold text-white">{leadName ? `"${leadName}"` : 'record'}</span> {leadId ? <span className="text-gray-400 font-mono">(ID: #{leadId})</span> : ''}?
+          </p>
+
+          <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg text-xs text-rose-300">
+            ⚠️ <strong>Warning:</strong> Deleting this lead will permanently erase all associated activity notes and contact history.
+          </div>
+        </div>
 
         <div className="flex justify-end gap-3">
           <button
