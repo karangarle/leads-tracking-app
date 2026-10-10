@@ -17,7 +17,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   return (
-    <div className="px-5 py-4 border-t border-brand-border flex justify-between items-center bg-brand-secondary/40">
+    <div className="px-4 sm:px-5 py-4 border-t border-brand-border flex flex-col sm:flex-row gap-3 sm:justify-between items-center bg-brand-secondary/40">
       <span className="text-xs text-gray-400">
         Showing {currentCount} of {total} leads (Page {page} of {totalPages})
       </span>

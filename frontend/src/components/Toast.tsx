@@ -16,7 +16,7 @@ export const ToastContainer: React.FC<ToastProps> = ({ toasts, onDismiss }) => {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none">
+    <div className="fixed top-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-3 max-w-sm w-auto sm:w-full pointer-events-none">
       {toasts.map((toast) => {
         const isSuccess = toast.type === 'success';
         const isError = toast.type === 'error';

@@ -17,8 +17,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onRefresh,
 }) => {
   return (
-    <div className="glass-panel p-5 flex gap-4 flex-wrap items-center">
-      <div className="flex-1 min-w-[240px] relative">
+    <div className="glass-panel p-4 sm:p-5 flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+      <div className="flex-1 min-w-0 relative">
         <Icon icon="material-symbols:search-rounded" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
         <input
           type="text"
@@ -29,24 +29,26 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         />
       </div>
 
-      <select
-        value={statusFilter}
-        onChange={(e) => onStatusChange(e.target.value)}
-        className="px-4 py-2.5 bg-brand-secondary/90 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 cursor-pointer transition-colors"
-      >
-        <option value="">All Statuses</option>
-        <option value="new">New</option>
-        <option value="contacted">Contacted</option>
-        <option value="qualified">Qualified</option>
-        <option value="lost">Lost</option>
-      </select>
+      <div className="flex gap-3 w-full sm:w-auto">
+        <select
+          value={statusFilter}
+          onChange={(e) => onStatusChange(e.target.value)}
+          className="flex-1 sm:flex-none px-4 py-2.5 bg-brand-secondary/90 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 cursor-pointer transition-colors"
+        >
+          <option value="">All Statuses</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="qualified">Qualified</option>
+          <option value="lost">Lost</option>
+        </select>
 
-      <button
-        onClick={onRefresh}
-        className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border text-sm font-medium transition-colors"
-      >
-        <Icon icon="material-symbols:refresh-rounded" className="w-4 h-4" /> Refresh
-      </button>
+        <button
+          onClick={onRefresh}
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border text-sm font-medium transition-colors shrink-0"
+        >
+          <Icon icon="material-symbols:refresh-rounded" className="w-4 h-4" /> Refresh
+        </button>
+      </div>
     </div>
   );
 };
