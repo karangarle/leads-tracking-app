@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Lead, Note } from '../types';
+import { StatusBadge } from './StatusBadge';
 import { Icon } from '@iconify/react';
 
 interface LeadDetailProps {
@@ -76,7 +77,7 @@ export const LeadDetail: React.FC<LeadDetailProps> = ({
               <h2 className="text-xl font-bold text-white">{lead.name}</h2>
               <span className="text-xs text-gray-400">ID: #{lead.id}</span>
             </div>
-            <span className={`badge badge-${lead.status}`}>{lead.status}</span>
+            <StatusBadge status={lead.status} />
           </div>
 
           <div className="flex flex-col gap-4 border-t border-brand-border pt-5">

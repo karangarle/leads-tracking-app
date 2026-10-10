@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import type { Lead, Note, PaginatedLeads } from './types';
+import { Header } from './components/Header';
+import { FilterBar } from './components/FilterBar';
+import { LeadTable } from './components/LeadTable';
+import { Pagination } from './components/Pagination';
 import { LeadModal } from './components/LeadModal';
 import { LeadDetail } from './components/LeadDetail';
 import { DeleteModal } from './components/DeleteModal';
 import { ToastContainer } from './components/Toast';
 import type { ToastMessage } from './components/Toast';
-import { Icon } from '@iconify/react';
 
 export const App: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -22,7 +25,6 @@ export const App: React.FC = () => {
     const id = Date.now().toString() + Math.random().toString(36).substring(2, 5);
     setToasts((prev) => [...prev, { id, type, message }]);
 
-    // Auto dismiss after 3.5 seconds
     setTimeout(() => {
       removeToast(id);
     }, 3500);
@@ -36,7 +38,7 @@ export const App: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
 
-  // Modals
+  // Modals State
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
   const [deletingLead, setDeletingLead] = useState<Lead | null>(null);
@@ -168,31 +170,13 @@ export const App: React.FC = () => {
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-8">
-      {/* Navbar Header */}
-      <header className="flex justify-between items-center mb-10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-[10px] bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/40">
-            <Icon icon="material-symbols:layers-outline-rounded" className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-              LeadTrack Portal
-            </h1>
-            <p className="text-xs text-gray-400">Enterprise Lead Management & CRM System</p>
-          </div>
-        </div>
+      {/* Header */}
+      <Header
+        showNewLeadButton={!selectedLead}
+        onOpenCreateModal={() => setIsCreateModalOpen(true)}
+      />
 
-        {!selectedLead && (
-          <button
-            onClick={() => setIsCreateModalOpen(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-tr from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold text-sm transition-all shadow-lg shadow-purple-500/30"
-          >
-            <Icon icon="material-symbols:add-rounded" className="w-5 h-5" /> New Lead
-          </button>
-        )}
-      </header>
-
-      {/* Main Content Area */}
+      {/* Main Content */}
       {selectedLead ? (
         <LeadDetail
           lead={selectedLead}
@@ -205,135 +189,33 @@ export const App: React.FC = () => {
       ) : (
         <div className="flex flex-col gap-6">
           {/* Search & Filter Bar */}
-          <div className="glass-panel p-5 flex gap-4 flex-wrap items-center">
-            <div className="flex-1 min-w-[240px] relative">
-              <Icon icon="material-symbols:search-rounded" className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search leads by name, email, or phone..."
-                className="w-full pl-9 pr-3.5 py-2.5 bg-brand-secondary/80 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 transition-colors"
-              />
-            </div>
+          <FilterBar
+            search={search}
+            onSearchChange={setSearch}
+            statusFilter={statusFilter}
+            onStatusChange={setStatusFilter}
+            onRefresh={() => fetchLeads(1)}
+          />
 
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2.5 bg-brand-secondary/90 border border-brand-border rounded-md text-white text-sm focus:border-purple-500 cursor-pointer transition-colors"
-            >
-              <option value="">All Statuses</option>
-              <option value="new">New</option>
-              <option value="contacted">Contacted</option>
-              <option value="qualified">Qualified</option>
-              <option value="lost">Lost</option>
-            </select>
-
-            <button
-              onClick={() => fetchLeads(1)}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border text-sm font-medium transition-colors"
-            >
-              <Icon icon="material-symbols:refresh-rounded" className="w-4 h-4" /> Refresh
-            </button>
-          </div>
-
-          {/* Table Container */}
+          {/* Table & Pagination Container */}
           <div className="glass-panel overflow-hidden">
-            {loading ? (
-              <div className="p-12 text-center text-gray-400">Loading leads...</div>
-            ) : error ? (
-              <div className="p-12 text-center text-rose-400">{error}</div>
-            ) : leads.length === 0 ? (
-              <div className="p-12 text-center text-gray-400">
-                No leads found matching your query.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm border-collapse">
-                  <thead>
-                    <tr className="border-b border-brand-border bg-brand-secondary/50 text-gray-400 font-medium">
-                      <th className="p-4">ID</th>
-                      <th className="p-4">Name</th>
-                      <th className="p-4">Contact Details</th>
-                      <th className="p-4">Status</th>
-                      <th className="p-4">Created</th>
-                      <th className="p-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-brand-border">
-                    {leads.map((lead) => (
-                      <tr
-                        key={lead.id}
-                        className="hover:bg-brand-hover/40 transition-colors"
-                      >
-                        <td className="p-4 text-gray-400">#{lead.id}</td>
-                        <td className="p-4 font-semibold text-white">{lead.name}</td>
-                        <td className="p-4">
-                          <div className="text-gray-100">{lead.email}</div>
-                          <div className="text-xs text-gray-400">{lead.phone}</div>
-                        </td>
-                        <td className="p-4">
-                          <span className={`badge badge-${lead.status}`}>{lead.status}</span>
-                        </td>
-                        <td className="p-4 text-gray-400 text-xs">
-                          {new Date(lead.createdAt).toLocaleDateString()}
-                        </td>
-                        <td className="p-4 text-right">
-                          <div className="inline-flex gap-2">
-                            <button
-                              onClick={() => handleSelectLead(lead)}
-                              title="View Details & Notes"
-                              className="p-1.5 bg-blue-500/15 hover:bg-blue-500/25 text-blue-400 rounded-md border border-blue-500/30 transition-colors"
-                            >
-                              <Icon icon="material-symbols:visibility-outline-rounded" className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => setEditingLead(lead)}
-                              title="Edit Lead"
-                              className="p-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 rounded-md border border-amber-500/30 transition-colors"
-                            >
-                              <Icon icon="material-symbols:edit-outline-rounded" className="w-4 h-4" />
-                            </button>
-                            <button
-                              onClick={() => setDeletingLead(lead)}
-                              title="Delete Lead"
-                              className="p-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 rounded-md border border-rose-500/30 transition-colors"
-                            >
-                              <Icon icon="material-symbols:delete-outline-rounded" className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            <LeadTable
+              leads={leads}
+              loading={loading}
+              error={error}
+              onSelectLead={handleSelectLead}
+              onEditLead={(lead) => setEditingLead(lead)}
+              onDeleteLead={(lead) => setDeletingLead(lead)}
+            />
 
-            {/* Pagination Controls */}
             {!loading && leads.length > 0 && (
-              <div className="px-5 py-4 border-t border-brand-border flex justify-between items-center bg-brand-secondary/40">
-                <span className="text-xs text-gray-400">
-                  Showing {leads.length} of {pagination.total} leads (Page {pagination.page} of {pagination.totalPages})
-                </span>
-
-                <div className="flex gap-2">
-                  <button
-                    disabled={pagination.page <= 1}
-                    onClick={() => fetchLeads(pagination.page - 1)}
-                    className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
-                  >
-                    <Icon icon="material-symbols:chevron-left-rounded" className="w-4 h-4" />
-                  </button>
-                  <button
-                    disabled={pagination.page >= pagination.totalPages}
-                    onClick={() => fetchLeads(pagination.page + 1)}
-                    className="p-1.5 bg-brand-card hover:bg-brand-hover text-gray-400 rounded-md border border-brand-border disabled:opacity-50 transition-colors"
-                  >
-                    <Icon icon="material-symbols:chevron-right-rounded" className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              <Pagination
+                currentCount={leads.length}
+                total={pagination.total}
+                page={pagination.page}
+                totalPages={pagination.totalPages}
+                onPageChange={(page) => fetchLeads(page)}
+              />
             )}
           </div>
         </div>
@@ -363,7 +245,7 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* Delete Lead Confirmation Modal */}
+      {/* Delete Confirmation Modal */}
       {deletingLead && (
         <DeleteModal
           isOpen={true}
